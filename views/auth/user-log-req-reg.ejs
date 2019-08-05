@@ -1,0 +1,38 @@
+<%- contentFor('head') %>
+<meta name="description" content="<%= description %>">
+<meta name="Keywords" content="<%= keywords %>">
+
+<title><%= title %></title>
+
+<%- contentFor('header') %>
+
+<%- contentFor('body') %>
+
+<section class="page-login">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-login">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#" class="<%= typeof showLoginForm !== 'undefined' && showLoginForm ? 'active' : '' %>" id="login-form-link">Login</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#" class="<%= typeof showRegisterForm !== 'undefined' && showRegisterForm ? 'active' : '' %>" id="register-form-link">Register</a>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <%- include ../partials/forms/user/login.ejs %>
+                        <%- include ../partials/forms/user/forgot-password.ejs %>
+                        <%- include ../partials/forms/user/register.ejs %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- contentFor('footer') %>

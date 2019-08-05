@@ -1,0 +1,29 @@
+#mainNav {
+  .btn {
+    width: 120px;
+    font-size: 18px !important;
+    padding: 3px 12px;
+    line-height: 1.42857;
+    border-radius: 0;
+    margin-top: 10px;
+  }
+  .btn.btn-lg {
+    width: 160px;
+  }
+  .btn-red {
+    margin-right: 10px;
+    color: #fff !important;
+    background-color: #F05F40 !important;
+    border-color: #c01b32 !important;
+  }
+  .btn-default {
+    margin-right: 10px;
+    color: #fff!important;
+    background-color: #222!important;
+    border-color: #222!important;
+  }
+}
+
+#mainNav.default.affix-top {
+  background: #554D4C;
+}

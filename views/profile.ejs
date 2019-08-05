@@ -1,0 +1,15 @@
+<%- contentFor('head') %>
+<meta name="description" content="<%= description %>">
+<meta name="Keywords" content="<%= keywords %>">
+
+<title><%= title %></title>
+
+<%- contentFor('header') %>
+
+<%- contentFor('body') %>
+
+<section class="page-profile">
+    Hello <%= user.username %>
+</section>
+
+<%- contentFor('footer') %>

@@ -1,0 +1,68 @@
+<%
+loginForm = Form.create({
+    action: '/login',
+    method: 'post',
+    role: 'form',
+    id: 'login-form',
+    style: 'display: ' + (typeof showLoginForm !== 'undefined' && showLoginForm ? 'block' : 'none')
+});
+%>
+
+<%- loginForm.open() %>
+
+<% if (locals.loginFail) { %>
+    <p class="alert alert-danger">Login failed, please try again.</p>
+<% } %>
+
+<div class="form-group">
+    <%- loginForm.text().attr({
+        id: 'login-username',
+        name: 'Login[username]',
+        class: 'form-control',
+        placeholder: 'Username'
+    }) %>
+</div>
+
+<div class="form-group">
+    <%- loginForm.password().attr({
+        id: 'login-password',
+        name: 'Login[password]',
+        class: 'form-control',
+        placeholder: 'Password'
+    }) %>
+</div>
+
+<div class="form-group text-center">
+    <%- loginForm.checkbox().attr({
+        id: 'login-remember',
+        name: 'Login[remember]'
+    }) %>
+
+    <label for="login-remember"> Remember Me</label>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <%- loginForm.submit().attr({
+                id: 'login-submit',
+                name: 'Login[submit]',
+                class: 'form-control btn btn-login',
+                placeholder: 'Password',
+                value: 'Log In'
+            }) %>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="text-center">
+                <a href="/password/recovery" class="forgot-password">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- loginForm.end() %>

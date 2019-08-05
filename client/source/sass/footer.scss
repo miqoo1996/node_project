@@ -1,0 +1,11 @@
+@import "includes/_variables";
+
+footer {
+  .container {
+    .row {
+      .col-lg-8.text-center {
+        margin-top: $footer-container-top;
+      }
+    }
+  }
+}
