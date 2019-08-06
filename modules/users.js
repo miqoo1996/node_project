@@ -8,6 +8,7 @@ var mysql = settings.mysql;
 module.exports = {
     settings: null,
     roleModel: null,
+    formName: 'Registration',
     setRoleModel: function (model) {
         this.roleModel = model;
     },
@@ -17,14 +18,14 @@ module.exports = {
     isValidate: function (data, form) {
         switch (form) {
             case 'register':
-                if (validation.isEmail(data['Registration[email]'])
-                    && validation.between([data['Registration[username]'], data['Registration[password]']], 6, 60)
-                    && validation.between([data['Registration[firstname]'], data['Registration[lastname]']], 3, 255)
-                    && validation.isValidate(data['Registration[username]'], /^[a-zA-Z0-9]+$/i)
-                    && validation.isValidate(data['Registration[firstname]'], /^[A-Z\s]+$/i)
-                    && validation.isValidate(data['Registration[lastname]'], /^[A-Z\s]+$/i)
-                    && validation.isset(data['Registration[role]'])
-                    && validation.confirm(data['Registration[password]'], data['Registration[confirm-password]'])) {
+                if (validation.isEmail(data[this.formName + '[email]'])
+                    && validation.between([data[this.formName + '[username]'], data[this.formName + '[password]']], 6, 60)
+                    && validation.between([data[this.formName + '[firstname]'], data[this.formName + '[lastname]']], 3, 255)
+                    && validation.isValidate(data[this.formName + '[username]'], /^[a-zA-Z0-9]+$/i)
+                    && validation.isValidate(data[this.formName + '[firstname]'], /^[A-Z\s]+$/i)
+                    && validation.isValidate(data[this.formName + '[lastname]'], /^[A-Z\s]+$/i)
+                    && validation.isset(data[this.formName + '[role]'])
+                    && validation.confirm(data[this.formName + '[password]'], data[this.formName + '[confirm-password]'])) {
                     return true;
                 }
                 break;
@@ -51,14 +52,14 @@ module.exports = {
         var _self = this;
         if (this.isValidate(data, 'register')) {
             var saveData = {
-                firstname: data['Registration[firstname]'],
-                lastname: data['Registration[lastname]'],
-                email: data['Registration[email]'],
-                username: data['Registration[username]'],
-                password: md5(data['Registration[password]'])
+                firstname: data[this.formName + '[firstname]'],
+                lastname: data[this.formName + '[lastname]'],
+                email: data[this.formName + '[email]'],
+                username: data[this.formName + '[username]'],
+                password: md5(data[this.formName + '[password]'])
             };
 
-            var roleId = data['Registration[role]'];
+            var roleId = data[this.formName + '[role]'];
             var userRoleCheckPromise = this.roleModel.checkRole(roleId);
             userRoleCheckPromise.then(function(count) {
                 if (!count) {

@@ -52,9 +52,53 @@ module.exports = {
 
         return promise;
     },
-    findAllByGroup: function (dropdownList, group) {
+    findAllByGroup: function (dropdownList, group, id) {
         var promise = new Promise(function(resolve, reject) {
             mysql.query("SELECT r.* FROM `role_groups`  g LEFT JOIN `roles` r ON g.`id`=r.`role_gropup_id` WHERE g.`name`=?", [group], function (err, result) {
+                if (err) {
+                    reject(err);
+                    throw err;
+                }
+
+                var roles = {};
+                if (typeof dropdownList !== 'undefined' && dropdownList) {
+                    for (var i in result) {
+                        roles[result[i].id] = result[i].name;
+                    }
+                } else {
+                    roles = result;
+                }
+                resolve(roles);
+            });
+        });
+
+        return promise;
+    },
+    findRolesByGroupId: function(dropdownList, id) {
+        var promise = new Promise(function(resolve, reject) {
+            mysql.query("SELECT r.* FROM `roles` r LEFT JOIN `role_groups` rg ON r.`role_gropup_id`=rg.`id` WHERE r.`role_gropup_id`= ?", [id], function (err, result) {
+                if (err) {
+                    reject(err);
+                    throw err;
+                }
+
+                var roles = {};
+                if (typeof dropdownList !== 'undefined' && dropdownList) {
+                    for (var i in result) {
+                        roles[result[i].id] = result[i].name;
+                    }
+                } else {
+                    roles = result;
+                }
+                resolve(roles);
+            });
+        });
+
+        return promise;
+    },
+    findRoleGroups: function(dropdownList) {
+        var promise = new Promise(function(resolve, reject) {
+            mysql.query("Select * from `role_groups`", function (err, result) {
                 if (err) {
                     reject(err);
                     throw err;

@@ -8,7 +8,8 @@ var app = express();
 
 var serverConfig = exports;
 var config = {
-    host: 'node_project.test',
+    host: '127.0.0.1',
+    //host: 'node_project.test',
     //host: 'http://node_project.test',
     port: process.env.PORT || 8000,
     mysql: {

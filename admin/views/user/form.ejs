@@ -1,0 +1,113 @@
+<%
+UForm = Form.create({
+    action: '/admin/user/add',
+    method: 'post',
+    role: 'form',
+    id: 'user-form',
+    style: 'display: block'
+});
+%>
+<%- UForm.open() %>
+
+<% if (locals.failForm) { %>
+<p class="alert alert-danger">form failed, please try again.</p>
+<% } %>
+
+<div class="form-group">
+    <%- UForm.select()
+            .attr({
+                id: 'User-role_group',
+                name: 'User[role_group]',
+                class: 'form-control'
+            })
+            .setOptions(locals.roles)
+            .setEmpty('- select a role group -')
+            .render();
+    %>
+</div>
+
+<div class="form-group">
+    <%- UForm.select()
+            .attr({
+                id: 'User-role_user',
+                name: 'User[role_user]',
+                class: 'form-control'
+            })
+            .setOptions({})
+            .setEmpty('- select a role -')
+            .render();
+    %>
+</div>
+
+<div class="form-group">
+    <%- UForm.text().attr({
+        id: 'User-firstname',
+        name: 'User[firstname]',
+        class: 'form-control',
+        placeholder: 'Firstname'
+    }) %>
+</div>
+
+<div class="form-group">
+    <%- UForm.text().attr({
+        id: 'User-lastname',
+        name: 'User[lastname]',
+        class: 'form-control',
+        placeholder: 'Lastname'
+    }) %>
+</div>
+
+<div class="form-group">
+    <%- UForm.password().attr({
+        id: 'User-password',
+        name: 'User[password]',
+        class: 'form-control',
+        placeholder: 'Password'
+    }) %>
+</div>
+
+<div class="form-group">
+    <%- UForm.password().attr({
+        id: 'User-confirm-password',
+        name: 'User[confirm-password]',
+        class: 'form-control',
+        placeholder: 'Confirm Password'
+    }) %>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <%- UForm.submit().attr({
+                id: 'User-submit',
+                name: 'User[submit]',
+                class: 'form-control btn btn-register',
+                value: 'Submit Now'
+            }) %>
+        </div>
+    </div>
+</div>
+
+<%- UForm.end() %>
+
+<script>
+    var $userRoleSelect = $('#User-role_user');
+    $('#User-role_group').change(function() {
+        var _self = this;
+
+        $userRoleSelect.find('option').remove();
+
+        $.ajax({
+            url: "/admin/user/get/roles",
+            dataType: "json",
+            type: "POST",
+            async: false,
+            data: {id: _self.value},
+            success: function(resulte) {
+                $.each(resulte, function(e, f) {
+                    $userRoleSelect.append(new Option(f, e));
+                });
+            }
+        });
+    });
+</script>

@@ -39,5 +39,5 @@ module.exports = function(app, users, settings) {
         });
     });
 
-    require('./users.js')(app, users, settings);
+    require('./users/index.js')(app, users, settings);
 };
