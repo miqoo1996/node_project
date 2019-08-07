@@ -11,6 +11,15 @@ UForm = Form.create({
 
 <% if (locals.failForm && locals._isPostReq) { %>
 <p class="alert alert-danger">form failed, please try again.</p>
+
+    <% if (locals.userExist) { %>
+    <p class="alert alert-danger">Registration failed: Username or Email you entered already exists.</p>
+    <% } %>
+
+    <% if (locals.userRoleNotExist) { %>
+    <p class="alert alert-danger">Registration failed: The user role not exist.</p>
+    <% } %>
+
 <% } %>
 
 <div class="form-group">
@@ -37,6 +46,24 @@ UForm = Form.create({
             .setEmpty('- select a role -')
             .render();
     %>
+</div>
+
+<div class="form-group">
+    <%- UForm.text().attr({
+        id: 'User-username',
+        name: 'User[username]',
+        class: 'form-control',
+        placeholder: 'Username'
+    }) %>
+</div>
+
+<div class="form-group">
+    <%- UForm.email().attr({
+        id: 'User-email',
+        name: 'User[email]',
+        class: 'form-control',
+        placeholder: 'Email Address'
+    }) %>
 </div>
 
 <div class="form-group">

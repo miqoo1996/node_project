@@ -4,9 +4,10 @@ module.exports = {
     isValidate: function(value, regExp) {
         return regExp.test(value);
     },
-    isEmail: function(value) {
-        if (!this.isset(value) || value === '') {
-            return true;
+    _isEmail: function(value) {
+        if (!this._isset(value) || value === '') {
+            // return true;
+            return false;
         }
 
         // Email address regular expression
@@ -15,7 +16,7 @@ module.exports = {
 
         return this.isValidate(value, emailRegExp);
     },
-    isset: function(values) {
+    _isset: function(values) {
         if (typeof values !== 'undefined' && values) {
             if (typeof values === "object") {
                 for (var i in values) {
@@ -28,8 +29,8 @@ module.exports = {
         }
         return false;
     },
-    between: function(values, min, max) {
-        if (this.isset(values)) {
+    _between: function(values, min, max) {
+        if (this._isset(values)) {
             if (typeof values === "string") {
                 return values.length >= min && values.length <= max
             } else if (typeof values === "object") {
@@ -43,8 +44,8 @@ module.exports = {
         }
         return false;
     },
-    confirm: function(value1, value2) {
-        if (this.isset([value1, value2])) {
+    _confirm: function(value1, value2) {
+        if (this._isset([value1, value2])) {
             return value1 == value2;
         }
         return false;

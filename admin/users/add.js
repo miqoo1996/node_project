@@ -23,6 +23,7 @@ module.exports = function(app, users, settings) {
         var userRoleNotExist = req.param('userRoleNotExist');
 
         Promise.all([userRolesPromise]).then(function(values) {
+            console.log(users.formValidator);
             userRoles = values[0];
             res.render('user/add', {
                 Form: Form,

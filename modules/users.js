@@ -1,9 +1,11 @@
 var md5 = require('md5');
 var roles = require('./roles.js');
-var validation = require('./MValidation');
+var validation = require('./UserFormValidation');
 var settings = require("../configs/main.js");
 var sessionStore = settings.getSessionStore();
 var mysql = settings.mysql;
+
+module.exports.formValidator = validation;
 
 module.exports = {
     settings: null,
@@ -77,6 +79,7 @@ module.exports = {
                 }
             });
         } else {
+            console.log(validation);
             callback('fail')
         }
         return false;
