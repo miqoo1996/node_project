@@ -9,7 +9,7 @@ UForm = Form.create({
 %>
 <%- UForm.open() %>
 
-<% if (locals.failForm) { %>
+<% if (locals.failForm && locals._isPostReq) { %>
 <p class="alert alert-danger">form failed, please try again.</p>
 <% } %>
 

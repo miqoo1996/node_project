@@ -71,6 +71,7 @@ module.exports = {
                         emitter.emit('userform:validation:status:' + status);
                         if (typeof callback === 'function') {
                             callback(status, user);
+                            return true;
                         }
                     });
                 }
@@ -78,6 +79,7 @@ module.exports = {
         } else {
             callback('fail')
         }
+        return false;
     },
     login: function (data, emitter, callback) {
         if (this.isValidate(data, 'login')) {

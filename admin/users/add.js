@@ -7,6 +7,8 @@ module.exports = function(app, users, settings) {
     users.setSettings(settings);
     users.formName = 'User';
 
+    users._isPostReq = false;
+
     app.get('/admin/user/add', users.isAdminMiddleware, function(req, res) {
         res.locals = {
             title: 'Add User',
@@ -16,25 +18,30 @@ module.exports = function(app, users, settings) {
 
         var userRolesPromise = roles.findRoleGroups(true);
 
+        var failForm = req.param('failForm');
         var userExist = req.param('userExist');
-
         var userRoleNotExist = req.param('userRoleNotExist');
 
         Promise.all([userRolesPromise]).then(function(values) {
             userRoles = values[0];
             res.render('user/add', {
                 Form: Form,
-                failForm: false,
+                _isPostReq: users._isPostReq,
+                failForm: failForm,
                 roles: userRoles,
                 userExist: userExist,
                 userRoleNotExist: userRoleNotExist
             });
+
+            // setting request metod type
+            users._isPostReq = false;
         });
     });
 
     app.post('/admin/user/add', users.isAdminMiddleware, function(req, res) {
+        users._isPostReq = true;
 
-        users.register(req.body, emitter, function(status) {
+        var isRegistread = users.register(req.body, emitter, function(status) {
 
         });
 
@@ -49,6 +56,6 @@ module.exports = function(app, users, settings) {
             userRoleNotExist = 1;
         });
 
-        res.redirect('/admin/user/add?userExist=' + userExist + '&userRoleNotExist=' + userRoleNotExist);
+        res.redirect('/admin/user/add?failForm=' + (isRegistread ? 0 : 1) + '&userExist=' + userExist + '&userRoleNotExist=' + userRoleNotExist);
     });
 };
